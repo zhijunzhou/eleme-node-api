@@ -12,7 +12,8 @@ var config = {
 	encodingType: 'UTF-8',
 	query: {
 		restaurants:'/v2/restaurants/',
-		food: '/food/'
+		food: '/food/',
+		orderNew: '/order/new/',
 	}
 };
 
