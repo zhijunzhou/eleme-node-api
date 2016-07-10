@@ -1,4 +1,5 @@
 var config = {
+	debug: true, // true for local test
 	baseUrl: 'http://v2.openapi.ele.me', // open api url
 	consumer_secret:'87217cb263701f90316236c4df00d9352fb1da76',
 	sysParams: {
@@ -14,6 +15,7 @@ var config = {
 		restaurants:'/v2/restaurants/',
 		food: '/food/',
 		orderNew: '/order/new/',
+		order: '/order/',
 	}
 };
 
