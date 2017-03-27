@@ -1,6 +1,7 @@
 var config = require('./config');
 var output = require('./common/output').output;
 var q = require('./controllers/controllers');
+var oppties = require('./data/sample')
 var express = require('express');
 var router = express.Router();
 
@@ -106,7 +107,22 @@ router.get('/order/detail', function(req, res, next) {
 		res.jsonp(message);
 		output(message);
 	}
+
 });
+
+router.get('/oauth', function (req, res, next) {
+	q.getToken();
+})
+
+router.get('/api/documents', function(req, res, next) {
+	res.status(200);
+	res.json(oppties);
+})
+
+router.get('/api/documents/my/recent', function(req, res, next) {
+	res.status(200);
+	res.json(oppties);
+})
 
 module.exports = router;
 

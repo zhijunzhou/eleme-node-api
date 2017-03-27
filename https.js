@@ -5,6 +5,8 @@ var config = require('./config'),
     express = require('express'),
   	router = require('./webRouter'),
   	http = require('http'),
+  	fs 	  = require('fs'),
+  	https = require('https'),
     requestLog = require('./middlewares/request_log'),
     errorhandler = require('errorhandler'),
     favicon = require('serve-favicon'),
@@ -13,7 +15,12 @@ var config = require('./config'),
   
 var app = express();
 
-app.set('port', process.env.PORT || 8080);  
+var options = {
+	key: fs.readFileSync('./pem/private.pem'),
+	cert: fs.readFileSync('./pem/certificate.pem')
+};
+
+app.set('port', process.env.PORT || 443);  
 
 app.use(favicon(path.join(__dirname, 'public', 'favicon.ico')));
 
@@ -24,14 +31,6 @@ if(config.debug) {
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(express.static(path.join(__dirname, 'public')));
-
-// app.all('*', function(req, res, next) {
-//   res.header('Access-Control-Allow-Origin', '*');
-//   res.header('Access-Control-Allow-Headers', 'X-Requested-With');
-//   res.header('Access-Control-Allow-Methods', 'PUT,POST,GET,DELETE,OPTIONS');
-//   res.header('Content-Type', 'application/json;charset=utf-8');
-//   next();
-// })
 
 app.use('/', router);
 
@@ -45,6 +44,6 @@ if (config.debug) {
   });
 }
 
-http.createServer(app).listen(app.get('port'), function(){  
+https.createServer(app).listen(app.get('port'), function(){  
   console.log("Express server listening on port " + app.get('port'));  
 });  
