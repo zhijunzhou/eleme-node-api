@@ -4,7 +4,7 @@
   "description": "",
   "main": "config.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "start": "node server.js"
   },
   "author": "",
   "license": "ISC",
@@ -16,5 +16,9 @@
     "request-promise": "^3.0.0",
     "serve-favicon": "^2.3.0",
     "sha1": "^1.1.1"
+  },
+  "devDependencies": {
+    "md5": "^2.2.1",
+    "oauth": "^0.9.15"
   }
 }

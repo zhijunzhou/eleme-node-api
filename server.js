@@ -1,9 +1,10 @@
 /** 
- * eleme node server
+ * eleme api transfer node server
  */  
 var config = require('./config'),
     express = require('express'),
   	router = require('./webRouter'),
+    // router2 = require('./webRouter_2'),
   	http = require('http'),
     requestLog = require('./middlewares/request_log'),
     errorhandler = require('errorhandler'),
@@ -32,6 +33,8 @@ app.use(express.static(path.join(__dirname, 'public')));
 //   res.header('Content-Type', 'application/json;charset=utf-8');
 //   next();
 // })
+
+// app.use('/', router2);
 
 app.use('/', router);
 

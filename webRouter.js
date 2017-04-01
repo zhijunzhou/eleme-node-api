@@ -112,17 +112,11 @@ router.get('/order/detail', function(req, res, next) {
 
 router.get('/oauth', function (req, res, next) {
 	q.getToken();
-})
+});
 
-router.get('/api/documents', function(req, res, next) {
-	res.status(200);
-	res.json(oppties);
-})
+router.get('/v2/food', function(req, res, next) {
 
-router.get('/api/documents/my/recent', function(req, res, next) {
-	res.status(200);
-	res.json(oppties);
-})
+});
 
 module.exports = router;
 

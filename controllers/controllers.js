@@ -1,6 +1,7 @@
 var config = require('../config');
 var util = require('../common/util');
 var rq = require('../common/request');
+var oauth = require('../common/oAuth');
 var qs = require('querystring');
 
 function get(url, consumer_secret) {
@@ -12,6 +13,7 @@ function get(url, consumer_secret) {
 exports.getFood = function(path, food_id, consumer_secret, params) {
     // string A
     var url = config.baseUrl + path + food_id + "?" + qs.stringify(params);
+    oauth.getToken();
 
     return get(url, consumer_secret);
 };
