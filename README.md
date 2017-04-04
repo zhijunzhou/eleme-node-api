@@ -5,5 +5,5 @@ eleme node api
 >npm install
 
 # start server
->node server.js
+>npm start
 
