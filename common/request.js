@@ -84,4 +84,4 @@ var sig = md5_str.toString().toUpperCase();
 // 8 . 将签名计算的结果赋值给请求对象的signature属性，此时就完成了API调用所需要的signature参数的计算
 raw.signature = sig;
 
-console.log(JSON.stringify(raw));
+// console.log(JSON.stringify(raw));

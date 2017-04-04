@@ -4,14 +4,13 @@
 var config = require('./config'),
     express = require('express'),
   	router = require('./webRouter'),
-    // router2 = require('./webRouter_2'),
   	http = require('http'),
     requestLog = require('./middlewares/request_log'),
     errorhandler = require('errorhandler'),
     favicon = require('serve-favicon'),
   	bodyParser = require('body-parser'),
   	path = require('path');
-  
+
 var app = express();
 
 app.set('port', process.env.PORT || 8080);  
