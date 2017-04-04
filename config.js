@@ -20,6 +20,19 @@ var config = {
 	oauth: {
 		appid: 'wx9f51df2624282eb1',
 		secret: '0f60883c96bd8cc7dec06b3c601f233e'
+	},
+	v2: {
+		env:{
+			app:{
+				clientId: ''
+			},
+			auth: {
+				sandbox: ''
+			},
+			token: {
+				sandbox: ''
+			}
+		}
 	}
 };
 
