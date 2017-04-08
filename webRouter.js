@@ -1,9 +1,11 @@
 var config = require('./config');
 var output = require('./common/output').output;
 var q = require('./controllers/controllers');
-var oppties = require('./data/sample')
+var factory = require('./services/factory');
+var oppties = require('./data/sample');
 var express = require('express');
 var util = require('util');
+var uuid = require('uuid4');
 var multer = require('multer');
 
 var router = express.Router();
@@ -120,6 +122,51 @@ router.get('/v2/food', function (req, res, next) {
 
 });
 
+function processIssue(req, cb) {
+	var id = req.params.id;
+
+	function getIssueById(arr, id) {
+		for (var j = 0; j < arr.length; j++) {
+			if (id === arr[j].id) {
+				return arr[j];
+			}
+		}
+		return null;
+	}
+
+	factory.getAll(function (err, data) {
+		if (err) {
+			cb(err);
+		} else {
+			if (id && typeof id === "string") {
+				cb(getIssueById(data.issues, id));
+			} else {
+				cb(data);
+			}
+		}
+	});
+}
+
+router.get('/v2/issues', function (req, res, next) {
+	processIssue(req, function(err, data) {
+		if(err) {
+			res.json(err);
+			return;
+		}
+		res.json(data);
+	})
+});
+
+router.get('/v2/issues/:id', function (req, res, next) {
+	processIssue(req, function(err, data) {
+		if(err) {
+			res.json(err);
+			return;
+		}
+		res.json(data);
+	})
+});
+
 var storage = multer.diskStorage({
 	destination: function (req, file, cb) {
 		cb(null, './uploads');
@@ -128,12 +175,29 @@ var storage = multer.diskStorage({
 		cb(null, Date.now() + '-' + file.originalname);
 	}
 });
+
 var upload = multer({ dest: './uploads/', storage: storage });
 router.post('/v2/upload', upload.single('file'), function (req, res, next) {
-	if(req.file.path) {
-		res.json({isSuccess: true});
+	if (req.file.path) {
+		var id = uuid();
+		var obj = {
+			id: id,
+			issueType: null,
+			priority: null,
+			attachement: req.file,
+			description: null,
+			iemail: null
+		}
+		factory.insert(obj, function (err, data) {
+			if (err) {
+				res.json({ isSuccess: false, info: err });
+				return;
+			}
+			res.json({ isSuccess: true, info: data });
+		})
+	} else {
+		res.json({ isSuccess: false, info: 'file not found!' });
 	}
-	next();
 });
 
 module.exports = router;
